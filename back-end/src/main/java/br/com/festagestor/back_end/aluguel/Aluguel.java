@@ -1,11 +1,12 @@
-package br.com.festagestor.back_end;
+package br.com.festagestor.back_end.aluguel;
 
+import br.com.festagestor.back_end.cliente.Cliente;
+import br.com.festagestor.back_end.item.Item;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
-import lombok.Data;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;

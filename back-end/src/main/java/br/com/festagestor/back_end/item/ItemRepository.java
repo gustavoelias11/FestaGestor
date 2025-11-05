@@ -1,4 +1,4 @@
-package br.com.festagestor.back_end;
+package br.com.festagestor.back_end.item;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

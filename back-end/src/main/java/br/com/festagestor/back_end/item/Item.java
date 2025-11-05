@@ -1,9 +1,7 @@
-package br.com.festagestor.back_end;
+package br.com.festagestor.back_end.item;
 
 import jakarta.persistence.*; // <-- Import necessário
 import lombok.Data;
-import java.math.BigDecimal;
-
 import java.math.BigDecimal;
 
 @Data
