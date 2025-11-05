@@ -1,4 +1,4 @@
-package br.com.festagestor.back_end;
+package br.com.festagestor.back_end.item;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

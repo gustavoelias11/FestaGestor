@@ -1,4 +1,4 @@
-package br.com.festagestor.back_end;
+package br.com.festagestor.back_end.cliente;
 
 import jakarta.persistence.*; // <-- Import necessário
 import lombok.Data;

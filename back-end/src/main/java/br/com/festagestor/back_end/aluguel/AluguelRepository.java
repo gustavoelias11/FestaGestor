@@ -1,4 +1,4 @@
-package br.com.festagestor.back_end;
+package br.com.festagestor.back_end.aluguel;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
