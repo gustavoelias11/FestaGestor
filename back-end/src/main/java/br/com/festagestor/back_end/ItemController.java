@@ -22,4 +22,10 @@ public class ItemController {
     public Item criarItem(@RequestBody Item novoItem) {
         return itemRepository.save(novoItem);
     }
+
+    @PutMapping("/{id}")
+    public Item atualizarItem(@PathVariable Long id, @RequestBody Item itemComNovosDados) {
+        itemComNovosDados.setId(id);
+        return itemRepository.save(itemComNovosDados);
+    }
 }
