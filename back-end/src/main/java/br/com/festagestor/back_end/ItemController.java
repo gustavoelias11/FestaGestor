@@ -28,4 +28,9 @@ public class ItemController {
         itemComNovosDados.setId(id);
         return itemRepository.save(itemComNovosDados);
     }
+
+    @DeleteMapping("/{id}")
+    public void excluirItem(@PathVariable Long id) {
+        itemRepository.deleteById(id);
+    }
 }
