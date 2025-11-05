@@ -1,9 +1,8 @@
 package br.com.festagestor.back_end;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -19,4 +18,8 @@ public class ItemController {
         return itemRepository.findAll();
     }
 
+    @PostMapping
+    public Item criarItem(@RequestBody Item novoItem) {
+        return itemRepository.save(novoItem);
+    }
 }
