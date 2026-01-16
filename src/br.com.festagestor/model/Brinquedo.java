@@ -25,4 +25,9 @@ public class Brinquedo extends Item{
     public void setCapacidadeMaxima(int capacidadeMaxima) {
         this.capacidadeMaxima = capacidadeMaxima;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Capacidade Máxima: " + capacidadeMaxima;
+    }
 }

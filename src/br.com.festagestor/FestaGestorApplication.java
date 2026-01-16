@@ -1,7 +1,9 @@
 import model.Brinquedo;
+import model.Cliente;
 import model.Decoracao;
 import model.Item;
 import repository.ItemRepository;
+import service.CadastraClienteService;
 import service.CadastraItemService;
 
 import java.util.List;
@@ -11,6 +13,7 @@ public class FestaGestorApplication {
     public static void main(String[] args) {
         Scanner leitura = new Scanner(System.in);
         CadastraItemService service = new CadastraItemService();
+        CadastraClienteService serviceCliente = new CadastraClienteService();
 
         int opcao = 0;
 
@@ -19,6 +22,8 @@ public class FestaGestorApplication {
             System.out.println("1 - Cadastrar Brinquedo");
             System.out.println("2 - Cadastrar Decoração");
             System.out.println("3 - Listar Acervo");
+            System.out.println("4 - Cadastrar Cliente");
+            System.out.println("5 - Listar Clientes");
             System.out.println("0 - Sair");
             System.out.println("Escolha uma opção");
             opcao = leitura.nextInt();
@@ -54,7 +59,7 @@ public class FestaGestorApplication {
                     System.out.println("Digite o nome da Decoração");
                     String nomeD = leitura.nextLine();
 
-                    System.out.println("Digite a quantidade de" + nomeD);
+                    System.out.println("Digite a quantidade de " + nomeD);
                     int quantidadeD = leitura.nextInt();
 
                     System.out.println("Digite o preço de " + nomeD);
@@ -97,6 +102,30 @@ public class FestaGestorApplication {
                                 System.out.println(item);
                             }
                         }
+                    }
+                    break;
+                case 4:
+                    System.out.println("--- Cadastrando Cliente ---");
+
+                    System.out.println("Digite o nome do cliente: ");
+                    String nomeC = leitura.nextLine();
+
+                    System.out.println("Digite o número de telefone: ");
+                    String telefone = leitura.nextLine();
+
+                    System.out.println("Digite o endereço: ");
+                    String endereco = leitura.nextLine();
+
+                    Cliente cliente = new Cliente(nomeC, telefone, endereco);
+                    serviceCliente.cadastrar(cliente);
+                    break;
+                case 5:
+                    System.out.println("--- Clientes ---");
+
+                    List<Cliente> listaCliente = serviceCliente.listarTodosClientes();
+
+                    for (Cliente c : listaCliente) {
+                        System.out.println(c);
                     }
                     break;
                 case 0:

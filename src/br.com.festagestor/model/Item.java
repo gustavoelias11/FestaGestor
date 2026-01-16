@@ -34,4 +34,9 @@ public abstract class Item {
     public void setPreco(double preco) {
         this.preco = preco;
     }
+
+    @Override
+    public String toString() {
+        return "Item : " + descricao + ", Preço: " + preco;
+    }
 }

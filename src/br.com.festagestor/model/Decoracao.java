@@ -15,4 +15,9 @@ public class Decoracao extends Item{
     public void setTema(String tema) {
         this.tema = tema;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Tema: " + tema;
+    }
 }
