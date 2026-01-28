@@ -1,19 +1,19 @@
-import model.Brinquedo;
-import model.Cliente;
-import model.Decoracao;
-import model.Item;
+import model.*;
 import repository.ItemRepository;
+import service.CadastraAluguelService;
 import service.CadastraClienteService;
 import service.CadastraItemService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class FestaGestorApplication {
     public static void main(String[] args) {
         Scanner leitura = new Scanner(System.in);
-        CadastraItemService service = new CadastraItemService();
+        CadastraItemService serviceItem = new CadastraItemService();
         CadastraClienteService serviceCliente = new CadastraClienteService();
+        CadastraAluguelService aluguelService = new CadastraAluguelService();
 
         int opcao = 0;
 
@@ -24,6 +24,8 @@ public class FestaGestorApplication {
             System.out.println("3 - Listar Acervo");
             System.out.println("4 - Cadastrar Cliente");
             System.out.println("5 - Listar Clientes");
+            System.out.println("6 - Novo Aluguel");
+            System.out.println("7 - Listar Alugueis");
             System.out.println("0 - Sair");
             System.out.println("Escolha uma opção");
             opcao = leitura.nextInt();
@@ -51,7 +53,7 @@ public class FestaGestorApplication {
                     int capacidade = leitura.nextInt();
 
                     Brinquedo brinquedo = new Brinquedo(quantidade, nome, valor, tipo, capacidade);
-                    service.cadastrar(brinquedo);
+                    serviceItem.cadastrar(brinquedo);
                     break;
                 case 2:
                     System.out.println("--- Cadastrando Decoração ---");
@@ -71,7 +73,7 @@ public class FestaGestorApplication {
                     String tema = leitura.nextLine();
 
                     Decoracao decoracao = new Decoracao(quantidadeD, nomeD, valorD, tema);
-                    service.cadastrar(decoracao);
+                    serviceItem.cadastrar(decoracao);
                     break;
                 case 3:
                     System.out.println("--- Acervo ---");
@@ -82,7 +84,7 @@ public class FestaGestorApplication {
                     int tipoFiltro = leitura.nextInt();
                     leitura.nextLine();
 
-                    List<Item> lista = service.listarTodos();
+                    List<Item> lista = serviceItem.listarTodos();
 
                     if (lista.isEmpty()){
                         System.out.println("O estoque está vazio!");
@@ -127,6 +129,46 @@ public class FestaGestorApplication {
                     for (Cliente c : listaCliente) {
                         System.out.println(c);
                     }
+                    break;
+                case 6:
+                    System.out.println("--- Cadastrando Aluguel ---");
+                    List<Cliente> clientesDisponiveis = serviceCliente.listarTodosClientes();
+                    List<Item> itensDisponiveis = serviceItem.listarTodos();
+                    if(clientesDisponiveis.isEmpty()){
+                        System.out.println("Erro: Não há clientes cadastrados!");
+                        break;
+                    }
+
+                    System.out.println("Selecione o ciente (digite o número):");
+                    for (int i = 0; i < clientesDisponiveis.size(); i++) {
+                        System.out.println("[" + i + "]" + clientesDisponiveis.get(i).getNome());
+                    }
+                    int indiceCliente = leitura.nextInt();
+                    Cliente clienteSelecionado = clientesDisponiveis.get(indiceCliente);
+
+
+                    List<Item> carrinho = new ArrayList<>();
+                    int opcaoItem = 0;
+
+                    System.out.println("Selecione o item (digite o número):");
+                    while (true) {
+                        for (int i = 0; i < itensDisponiveis.size(); i++) {
+                            System.out.println("[" + i + "]" + itensDisponiveis.get(i).getDescricao());
+                        }
+                        opcaoItem = leitura.nextInt();
+                        if (opcaoItem == -1) {
+                            break;
+                        }
+
+                        if (opcaoItem >= 0 && opcaoItem < itensDisponiveis.size()) {
+                            Item itemEscolhido = itensDisponiveis.get(opcaoItem);
+                            carrinho.add(itemEscolhido);
+                            System.out.println(itemEscolhido.getDescricao() + " adicionado com sucesso!");
+                        } else {
+                            System.out.println("Opção inválida!");
+                        }
+                    }
+
                     break;
                 case 0:
                     System.out.println("Saindo...");
