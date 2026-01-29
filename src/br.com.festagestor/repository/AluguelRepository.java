@@ -10,7 +10,7 @@ public class AluguelRepository {
 
     public void salvarAluguel(Aluguel aluguel) {
         listaDeAlugueis.add(aluguel);
-        System.out.println("Aluguel " + aluguel + " foi cadastrado com sucesso!");
+        System.out.println(aluguel + " foi cadastrado com sucesso!");
     }
 
     public List<Aluguel> buscarAlugueis() {

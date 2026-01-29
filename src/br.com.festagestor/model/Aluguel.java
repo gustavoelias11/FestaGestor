@@ -10,13 +10,14 @@ public class Aluguel {
     private double valorTotal;
     private String status;
     private int idAluguel;
+    private static int contador = 1;
 
-    public Aluguel(Cliente cliente, List<Item> itens, LocalDate dataFesta, String status, int idAluguel) {
+    public Aluguel(Cliente cliente, List<Item> itens, LocalDate dataFesta) {
         this.cliente = cliente;
         this.itens = itens;
         this.dataFesta = dataFesta;
         this.status = "Aberto";
-        this.idAluguel = idAluguel;
+        this.idAluguel = contador++;
         calcularValorTotal();
     }
 
@@ -55,11 +56,11 @@ public class Aluguel {
 
     @Override
     public String toString() {
-        return "Aluguel{" +
-                "idAluguel=" + idAluguel +
-                ", cliente=" + cliente +
-                ", dataFesta=" + dataFesta +
-                ", valorTotal=" + valorTotal +
-                '}';
+        return "Aluguel: " +
+                "ID: [" + idAluguel +
+                "]" + cliente +
+                ", Data da Festa: " + dataFesta +
+                ", Valor Total: R$" + valorTotal
+                ;
     }
 }

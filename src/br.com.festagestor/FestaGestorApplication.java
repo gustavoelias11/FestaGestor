@@ -4,6 +4,8 @@ import service.CadastraAluguelService;
 import service.CadastraClienteService;
 import service.CadastraItemService;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -168,7 +170,25 @@ public class FestaGestorApplication {
                             System.out.println("Opção inválida!");
                         }
                     }
+                    leitura.nextLine();
 
+                    System.out.println("Informe o dia da festa (dd/MM/yyyy)");
+                    String data = leitura.nextLine();
+
+                    DateTimeFormatter formatar = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    LocalDate dataFesta = LocalDate.parse(data, formatar);
+
+                    Aluguel novoAluguel = new Aluguel(clienteSelecionado, carrinho, dataFesta);
+                    aluguelService.cadastrar(novoAluguel);
+                    break;
+                case 7:
+                    System.out.println("--- Aluguéis ---");
+
+                    List<Aluguel> listaDeAluguel = aluguelService.listarTodosAlugueis();
+
+                    for (Aluguel a : listaDeAluguel) {
+                        System.out.println(a);
+                    }
                     break;
                 case 0:
                     System.out.println("Saindo...");
