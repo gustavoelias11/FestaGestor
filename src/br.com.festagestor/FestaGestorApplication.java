@@ -26,6 +26,7 @@ public class FestaGestorApplication {
             System.out.println("5 - Listar Clientes");
             System.out.println("6 - Novo Aluguel");
             System.out.println("7 - Listar Alugueis");
+            System.out.println("8 - Devolver Aluguel");
             System.out.println("0 - Sair");
             System.out.println("Escolha uma opção");
             opcao = leitura.nextInt();
@@ -51,6 +52,8 @@ public class FestaGestorApplication {
 
                     System.out.println("Digite a capacidade máxima de " + nome);
                     int capacidade = leitura.nextInt();
+
+                    leitura.nextLine();
 
                     Brinquedo brinquedo = new Brinquedo(quantidade, nome, valor, tipo, capacidade);
                     serviceItem.cadastrar(brinquedo);
@@ -183,9 +186,43 @@ public class FestaGestorApplication {
                     System.out.println("--- Aluguéis ---");
 
                     List<Aluguel> listaDeAluguel = aluguelService.listarTodosAlugueis();
+                    if (!listaDeAluguel.isEmpty()) {
+                        boolean encontrou = false;
+                        for (Aluguel a : listaDeAluguel) {
+                            if (a.getStatus().equals("Aberto")) {
+                                encontrou = true;
+                                System.out.println(a);
+                            }
+                        }
+                        if (!encontrou) {
+                            System.out.println("Não consta aluguéis em aberto!");
+                        }
+                    } else {
+                        System.out.println("Não consta aluguéis abertos!");
+                    }
+                    break;
+                case 8:
+                    System.out.println("--- Devolvendo Aluguel ---");
+                    List<Aluguel> alugueisParaDevolver = aluguelService.listarTodosAlugueis();
+                    if(alugueisParaDevolver.isEmpty()){
+                        System.out.println("Erro: Não há aluguéis para devolver");
+                    }
 
-                    for (Aluguel a : listaDeAluguel) {
-                        System.out.println(a);
+                    System.out.println("Selecione o aluguel da lista (digite o número):");
+                    for (int i = 0; i < alugueisParaDevolver.size(); i++) {
+                        System.out.println("[" + i + "]" + alugueisParaDevolver.get(i));
+                    }
+                    int idAluguel = leitura.nextInt();
+
+                    leitura.nextLine();
+
+                    if (idAluguel >= 0 && idAluguel < alugueisParaDevolver.size()) {
+                        Aluguel devolveAluguel = alugueisParaDevolver.get(idAluguel);
+                        aluguelService.devolver(devolveAluguel);
+
+                        System.out.println("Devolução realizada com sucesso!");
+                    } else {
+                        System.out.println("Opção inválida!");
                     }
                     break;
                 case 0:

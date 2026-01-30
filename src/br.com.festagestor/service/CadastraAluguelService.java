@@ -17,6 +17,13 @@ public class CadastraAluguelService {
         }
     }
 
+    public void devolver(Aluguel aluguel) {
+        aluguel.setStatus("Finalizado");
+        for (Item item : aluguel.getItens()) {
+            item.devolverItem(1);
+        }
+    }
+
     public List<Aluguel> listarTodosAlugueis() {
         return repository.buscarAlugueis();
     }
