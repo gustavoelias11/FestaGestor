@@ -1,5 +1,6 @@
 package br.com.festagestor.domain.usuario.model;
 
+import br.com.festagestor.domain.usuario.dto.DadosCadastroUsuario;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,12 @@ public class Usuario implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "perfil_id")
     )
     private List<Perfil> perfis;
+
+    public Usuario(DadosCadastroUsuario dados, String senhaCriptografada, Perfil perfil) {
+        this.login = dados.login();
+        this.senha = senhaCriptografada;
+        this.perfis = List.of(perfil);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
