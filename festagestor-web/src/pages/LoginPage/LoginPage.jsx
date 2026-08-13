@@ -1,20 +1,40 @@
 import { useState } from 'react';
+// IMPORTAÇÃO ATUALIZADA: Trazemos o serviço de auth em vez da api direta
+import { authService } from '../../services/auth/authService'; 
 
-export function LoginPage() {
+export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [erro, setErro] = useState(''); 
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Futuramente, chamaremos o serviço em src/services/auth/
-    console.log('Dados capturados para envio:', { username, password });
+    setErro('');
+    setLoading(true);
+
+    try {
+      // O componente fica cego para a complexidade do HTTP. Ele apenas chama o serviço!
+      const token = await authService.login(username, password);
+      
+      console.log('Login efetuado com sucesso! Token:', token);
+      
+      localStorage.setItem('@Festagestor:token', token);
+      
+      // Futuramente: window.location.href = '/dashboard';
+
+    } catch (error) {
+      console.error("Erro no login:", error);
+      setErro('Usuário ou senha inválidos. Tente novamente.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-slate-50 p-4">
       <div className="w-full max-w-md">
         
-        {/* Logo e Título */}
         <div className="flex justify-center mb-8">
           <div className="flex items-center gap-3 text-blue-600 font-bold text-3xl">
             <div className="bg-blue-100 p-3 rounded-xl text-blue-600">
@@ -29,7 +49,6 @@ export function LoginPage() {
           </div>
         </div>
 
-        {/* Card de Login */}
         <div className="rounded-xl border border-gray-200 bg-white shadow-xl">
           <div className="flex flex-col p-6 space-y-1 pb-6 text-center">
             <h3 className="tracking-tight text-2xl font-bold text-gray-900">Acesse sua conta</h3>
@@ -39,6 +58,12 @@ export function LoginPage() {
           <div className="p-6 pt-0">
             <form className="space-y-4" onSubmit={handleLogin}>
               
+              {erro && (
+                <div className="p-3 text-sm text-red-500 bg-red-50 rounded-md border border-red-200">
+                  {erro}
+                </div>
+              )}
+
               <div className="space-y-2 text-left">
                 <label className="text-sm font-medium leading-none text-gray-700" htmlFor="username">
                   Usuário
@@ -71,10 +96,11 @@ export function LoginPage() {
               </div>
 
               <button 
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-colors bg-blue-600 text-white shadow hover:bg-blue-700 px-4 py-2 w-full h-11 text-base mt-2" 
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-colors bg-blue-600 text-white shadow hover:bg-blue-700 px-4 py-2 w-full h-11 text-base mt-2 disabled:opacity-70 disabled:cursor-not-allowed" 
                 type="submit"
+                disabled={loading}
               >
-                Acessar
+                {loading ? 'Autenticando...' : 'Acessar'}
               </button>
             </form>
           </div>
