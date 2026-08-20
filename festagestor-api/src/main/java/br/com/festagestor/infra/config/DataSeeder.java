@@ -223,6 +223,8 @@ public class DataSeeder implements CommandLineRunner {
         }
 
         aluguelRepository.saveAll(alugueis);
+
+        System.out.println("Data Seeder rodou com sucesso!");
     }
 
 }

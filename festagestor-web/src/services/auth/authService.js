@@ -9,6 +9,6 @@ export const authService = {
     });
     
     // Retorna apenas o token para quem chamou a função
-    return response.data.token; 
+    return response.data.tokenJWT; 
   },
 };
