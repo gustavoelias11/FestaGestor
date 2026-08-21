@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public interface AluguelRepository extends JpaRepository<Aluguel, Long> {
@@ -21,4 +22,13 @@ public interface AluguelRepository extends JpaRepository<Aluguel, Long> {
                                   @Param("dataEntregaNova") LocalDateTime dataEntregaNova,
                                   @Param("dataRetiradaNova") LocalDateTime dataRetiradaNova,
                                   @Param("statusCancelado") StatusAluguel statusAluguel);
+
+    @Query("""
+        SELECT COALESCE(SUM(a.valorTotal), 0)
+        FROM Aluguel a
+        WHERE a.status NOT IN ('PENDENTE', 'CANCELADO')
+        AND MONTH(a.dataCriacao) = MONTH(CURRENT_DATE)
+        AND YEAR(a.dataCriacao) = YEAR(CURRENT_DATE)
+            """)
+    BigDecimal somarFaturamento();
 }
