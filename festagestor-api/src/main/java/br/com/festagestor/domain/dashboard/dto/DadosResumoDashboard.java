@@ -3,8 +3,8 @@ package br.com.festagestor.domain.dashboard.dto;
 import java.math.BigDecimal;
 
 public record DadosResumoDashboard(
-        //Integer itensCadastrados,
-        //Integer alugueisMes,
-        //Integer clientesAtivos,
+        Long itensCadastrados,
+        Long alugueisMes,
+        Long clientesAtivos,
         BigDecimal faturamento
 ) {}

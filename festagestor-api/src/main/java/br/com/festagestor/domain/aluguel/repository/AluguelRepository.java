@@ -24,6 +24,11 @@ public interface AluguelRepository extends JpaRepository<Aluguel, Long> {
                                   @Param("statusCancelado") StatusAluguel statusAluguel);
 
     @Query("""
+    SELECT COUNT(a) FROM Aluguel a WHERE a.status NOT IN ('PENDENTE', 'CANCELADO') AND MONTH(a.dataCriacao) = MONTH(CURRENT_DATE)
+    """)
+    Long aluguelMes();
+
+    @Query("""
         SELECT COALESCE(SUM(a.valorTotal), 0)
         FROM Aluguel a
         WHERE a.status NOT IN ('PENDENTE', 'CANCELADO')
