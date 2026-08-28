@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+/* Aqui nós injetamos o Design System do Festagestor no Tailwind v4 */
+@theme {
+  --color-primary: #2563EB;
+  --color-primary-dark: #1E3A8A;
+  --color-confirmed: #10B100;
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-danger: #DC2626;
+  --color-background: #F8FAFC;
+  --color-foreground: #0F172A;
+}
+
+/* Opcional: mantendo o comportamento de bordas limpas para botões */
+@layer base {
+  button:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}

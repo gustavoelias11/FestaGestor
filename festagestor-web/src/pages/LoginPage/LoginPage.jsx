@@ -1,8 +1,10 @@
 import { useState } from 'react';
 // IMPORTAÇÃO ATUALIZADA: Trazemos o serviço de auth em vez da api direta
 import { authService } from '../../services/auth/authService'; 
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [erro, setErro] = useState(''); 
@@ -20,8 +22,8 @@ export default function LoginPage() {
       console.log('Login efetuado com sucesso! Token:', token);
       
       localStorage.setItem('@Festagestor:token', token);
-      
-      // Futuramente: window.location.href = '/dashboard';
+
+      navigate('/dashboard');
 
     } catch (error) {
       console.error("Erro no login:", error);
