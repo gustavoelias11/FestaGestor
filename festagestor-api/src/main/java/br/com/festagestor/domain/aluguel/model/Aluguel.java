@@ -3,6 +3,7 @@ package br.com.festagestor.domain.aluguel.model;
 import br.com.festagestor.domain.aluguel.dto.DadosCadastroAluguel;
 import br.com.festagestor.domain.cliente.model.Cliente;
 import br.com.festagestor.domain.shared.endereco.Endereco;
+import br.com.festagestor.domain.shared.exception.RegraDeNegocioException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -76,14 +77,14 @@ public class Aluguel {
 
     public void cancelar() {
         if (this.status == StatusAluguel.FINALIZADO) {
-            throw new RuntimeException("Aluguel finalizado não pode ser cancelados!");
+            throw new RegraDeNegocioException("Aluguel finalizado não pode ser cancelados!");
         }
         this.status = StatusAluguel.CANCELADO;
     }
 
     public void finalizar() {
         if (this.status != StatusAluguel.CONFIRMADO && this.status != StatusAluguel.MONTADO) {
-            throw new RuntimeException("Apenas aluguéis confirmados ou montados podem ser finalizados!");
+            throw new RegraDeNegocioException("Apenas aluguéis confirmados ou montados podem ser finalizados!");
         }
 
         this.status = StatusAluguel.FINALIZADO;
@@ -93,7 +94,7 @@ public class Aluguel {
         if (this.status == StatusAluguel.CONFIRMADO) {
             this.status = StatusAluguel.MONTADO;
         } else {
-            throw new RuntimeException("Apenas aluguéis confirmados podem ser montados!");
+            throw new RegraDeNegocioException("Apenas aluguéis confirmados podem ser montados!");
         }
     }
 
@@ -101,7 +102,7 @@ public class Aluguel {
         if (this.status == StatusAluguel.PENDENTE) {
             this.status = StatusAluguel.CONFIRMADO;
         } else {
-            throw new RuntimeException("Apenas aluguéis pendentes podem ser confirmados!");
+            throw new RegraDeNegocioException("Apenas aluguéis pendentes podem ser confirmados!");
         }
     }
 }
